@@ -26,13 +26,21 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const touristSpotCollection = client.db('spotDB').collection('addSpot')
     app.post('/addSpot', async(req, res) =>{
       const addSpot = req.body
       console.log('add tourist spot', addSpot);
-      const touristSpotCollection = client.db('spotDB').collection('addSpot')
       const result = await touristSpotCollection.insertOne(addSpot)
       res.send(result)
-      
+    })
+
+    app.get('/addSpot', async(req, res) =>{
+      const cursor = touristSpotCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+
+
+
     })
 
 
