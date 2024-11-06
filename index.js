@@ -38,9 +38,6 @@ async function run() {
       const cursor = touristSpotCollection.find()
       const result = await cursor.toArray()
       res.send(result)
-
-
-
     })
 
 
