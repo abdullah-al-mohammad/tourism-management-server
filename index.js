@@ -26,16 +26,18 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const touristSpotCollection = client.db('spotDB').collection('addSpot')
+    const tourismSpotCollection = client.db('spotDB').collection('addSpot')
+    const tourismSpotUserCollection = client.db('spotDB').collection('user')
+
     app.post('/addSpot', async(req, res) =>{
       const addSpot = req.body
       console.log('add tourist spot', addSpot);
-      const result = await touristSpotCollection.insertOne(addSpot)
+      const result = await tourismSpotCollection.insertOne(addSpot)
       res.send(result)
     })
 
     app.get('/addSpot', async(req, res) =>{
-      const cursor = touristSpotCollection.find()
+      const cursor = tourismSpotCollection.find()
       const result = await cursor.toArray()
       res.send(result)
     })
@@ -43,10 +45,26 @@ async function run() {
     app.get('/addSpot/:id', async(req, res) => {
       const id = req.params.id
       const query = {_id: new ObjectId(id)}
-      const result = await touristSpotCollection.findOne(query)
+      const result = await tourismSpotCollection.findOne(query)
       res.send(result)
     })
 
+
+    // user Information
+    app.post("/user", async(req, res) =>{
+      const users = req.body
+      const result = await tourismSpotUserCollection.insertOne(users)
+      console.log(result);
+      res.send(result)
+    })
+
+    app.get('/user', async (req, res) => {
+      const cursor = tourismSpotUserCollection.find()
+      // const userId = req.params.userId
+      // const query ={_id: new ObjectId(userId)} 
+      const result = await cursor.toArray()
+      res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection
