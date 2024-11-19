@@ -59,10 +59,13 @@ async function run() {
     })
 
     app.get('/user', async (req, res) => {
-      const cursor = tourismSpotUserCollection.find()
-      // const userId = req.params.userId
-      // const query ={_id: new ObjectId(userId)} 
-      const result = await cursor.toArray()
+      const result = await tourismSpotUserCollection.find().toArray()
+      res.send(result)
+    })
+    app.get('/user/:userId', async (req, res) => {
+      const userId = req.params.userId
+      const query ={_id: new ObjectId(userId)} 
+      const result = await tourismSpotUserCollection.findOne(query)
       res.send(result)
     })
 
