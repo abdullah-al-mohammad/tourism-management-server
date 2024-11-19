@@ -81,6 +81,6 @@ app.get('/', (req, res) =>{
     res.send('port is running')
 })
 app.listen(port, ()=>{
-    console.log(`tourism port is running on port ${port}`);
+    console.log(`tourism server is running on port ${port}`);
     
 })
