@@ -31,6 +31,8 @@ async function run() {
 
 		app.post('/addSpot', async (req, res) => {
 			const addSpot = req.body
+			const {creator} = addSpot
+			addSpot.creator = new ObjectId(creator)
 			console.log('add tourist spot', addSpot);
 			const result = await tourismSpotCollection.insertOne(addSpot)
 			res.send(result)
@@ -45,7 +47,7 @@ async function run() {
 		app.get('/addSpot/:id', async (req, res) => {
 			const id = req.params.id
 			const query = { _id: new ObjectId(id) }
-			const result = await tourismSpotCollection.findOne(query)
+			const result = await tourismSpotICollection.findOne(query)
 			res.send(result)
 		})
 
@@ -64,7 +66,7 @@ async function run() {
 				return res.status(400).send({ error: 'Email is required' });
 			}
 			try {
-				const result = await tourismSpotUserCollection.findOne( {email} )
+				const result = await tourismSpotUserCollection.findOne({ email })
 				if (result) {
 					res.send(result)
 				} else {
