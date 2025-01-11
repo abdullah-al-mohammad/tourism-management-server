@@ -41,7 +41,12 @@ async function run() {
 		})
 
 		app.get('/addSpot', async (req, res) => {
-			const cursor = tourismSpotCollection.find()
+			console.log(req.query.email);
+			let query = {}
+			if(req.query?.email){
+				query={email: req.query.email}
+			}
+			const cursor = tourismSpotCollection.find(query)
 			const result = await cursor.toArray()
 			res.send(result)
 		})
@@ -53,11 +58,15 @@ async function run() {
 			res.send(result)
 		})
 
-		app.get('/addSpot', async (req, res) => {
-			const userId = req.query.creator
-			const result = await tourismSpotCollection.find(userId).toArray()
-			res.send(result)
-		})
+		// app.get('/addSpot', async (req, res) => {
+		// 	console.log(req.query);
+			
+		// 	const userId = req.query.creator
+		// 	// console.log(userId);
+			
+		// 	const result = await tourismSpotCollection.find().toArray()
+		// 	res.send(result)
+		// })
 
 
 		// user Information
