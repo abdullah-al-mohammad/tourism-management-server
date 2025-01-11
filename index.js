@@ -31,6 +31,8 @@ async function run() {
 
 		app.post('/addSpot', async (req, res) => {
 			const addSpot = req.body
+			// console.log(addSpot);
+			
 			const {creator} = addSpot
 			addSpot.creator = new ObjectId(creator)
 			console.log('add tourist spot', addSpot);
@@ -47,7 +49,13 @@ async function run() {
 		app.get('/addSpot/:id', async (req, res) => {
 			const id = req.params.id
 			const query = { _id: new ObjectId(id) }
-			const result = await tourismSpotICollection.findOne(query)
+			const result = await tourismSpotCollection.findOne(query)
+			res.send(result)
+		})
+
+		app.get('/addSpot', async (req, res) => {
+			const userId = req.query.creator
+			const result = await tourismSpotCollection.find(userId).toArray()
 			res.send(result)
 		})
 
